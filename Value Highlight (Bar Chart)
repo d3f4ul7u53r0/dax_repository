@@ -1,0 +1,9 @@
+Value Highlight (Bar Chart) =
+VAR _SelectedColor =
+    SELECTEDVALUE ( tbl_Colors[Hex] )
+VAR _SelectedYear =
+    VALUES ( tbl_Years[Year] )
+VAR _Result =
+    IF ( SELECTEDVALUE ( Dates[Year] ) IN _SelectedYear, _SelectedColor, "GREY" )
+RETURN
+    _Result
