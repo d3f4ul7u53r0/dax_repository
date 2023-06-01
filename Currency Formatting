@@ -1,0 +1,23 @@
+Currency Formatting = 
+VAR _CurrencyAmnt =
+    SUM ( Data[Dollar Amount] )
+VAR _FormattedAmnt =
+    SWITCH (
+        TRUE (),
+        _CurrencyAmnt < 1000, _CurrencyAmnt,
+        _CurrencyAmnt < 1000000, DIVIDE ( _CurrencyAmnt, 1000 ),
+        _CurrencyAmnt < 1000000000, DIVIDE ( _CurrencyAmnt, 1000000 ),
+        DIVIDE ( _CurrencyAmnt, 1000000000 )
+    )
+VAR _NumFormat =
+    SWITCH (
+        TRUE (),
+        _CurrencyAmnt < 1000, "$##0",
+        _CurrencyAmnt < 1000000, "$##0.0," & "k",
+        _CurrencyAmnt < 1000000000, "$##0.00,," & "M",
+        "$##0.0,,," & "B"
+    )
+VAR _Result =
+    FORMAT ( _FormattedAmnt, _NumFormat )
+RETURN
+    _Result
